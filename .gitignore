@@ -1,0 +1,17 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.log
+
+# Virtual environment
+venv/
+*/venv/
+.env
+
+training/model-last/
+
+.DS_Store
+.idea/
+*.swp

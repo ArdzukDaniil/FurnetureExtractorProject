@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Product Extractor</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'extractor/css/style.css' %}"> <!-- Подключаем CSS -->
+</head>
+<body>
+
+    <div class="container">
+        <h1>Furniture Product Name Extractor</h1>
+        <p>Enter the URL of a furniture store's product page to extract product names.</p>
+
+        <!-- Форма для отправки URL -->
+        <form method="post" action="{% url 'home' %}"> <!-- Указываем URL name из urls.py -->
+            {% csrf_token %} <!-- Обязательный CSRF токен для Django форм -->
+            <input type="url" name="url" id="urlInput" placeholder="https://example.com/product" required
+                   value="{{ submitted_url|default:'' }}"> <!-- Сохраняем введенный URL после отправки -->
+            <button type="submit">Extract Products</button>
+        </form>
+
+        <!-- Область для вывода результатов -->
+        <div id="results">
+            {% if error %}
+                <p class="error">Error: {{ error }}</p>
+            {% endif %}
+
+            {% if products %}
+                <h2>Extracted Products:</h2>
+                {% if products|length > 0 %}
+                    <ul>
+                        {% for product in products %}
+                            <li>{{ product }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No product names found on this page.</p>
+                {% endif %}
+            {% endif %}
+
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
