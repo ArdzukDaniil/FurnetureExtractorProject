@@ -38,8 +38,8 @@ The underlying NER model was developed through a process involving:
 
 You can try out the application by visiting the following link:
 
-**[Link to your deployed application on Render]**
-*https://furniture-product-extractor.onrender.com*
+**[https://furniture-product-extractor.onrender.com]**
+*(https://furniture-product-extractor.onrender.com)*
 
 ## Future Work / Potential Improvements
 
