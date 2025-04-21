@@ -40,15 +40,6 @@ You can try out the application by visiting the following link:
 
 **https://furniture-product-extractor.onrender.com**
 
-
-## Future Work / Potential Improvements
-
-*   Implement asynchronous processing for scraping to handle slow websites without blocking the user interface.
-*   Enhance the scraper's robustness to handle JavaScript-rendered content.
-*   Expand the training dataset for the NER model to improve accuracy and coverage across more diverse site structures.
-*   Add features to display extracted prices or other relevant product details alongside the names.
-*   Improve UI/UX feedback during processing.
-
 ## Conclusion
 
 This project successfully demonstrates a practical approach to extracting specific information (product names) from diverse web sources using a combination of web scraping and a custom spaCy NER model within a Django framework. While developed as a Proof of Concept, the core components are scalable and adaptable for further development or different extraction tasks.
