@@ -1,15 +1,14 @@
-# extractor/services.py
 import requests
 from bs4 import BeautifulSoup
-from django.apps import apps # Для доступа к загруженной модели из AppConfig
+from django.apps import apps
 import logging
 from typing import List, Tuple, Optional
 
 logger = logging.getLogger(__name__)
 
-# --- Константы для скрейпинга (можно вынести в settings.py) ---
 REQUEST_TIMEOUT = 15
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+
 
 def extract_text_from_html(html_content: str) -> Optional[str]:
     """Извлекает основной текст из HTML (аналогично scraper.py)."""
@@ -24,12 +23,13 @@ def extract_text_from_html(html_content: str) -> Optional[str]:
         if main_content:
             text = main_content.get_text(separator=' ', strip=True)
             cleaned_text = ' '.join(text.split())
-            return cleaned_text if len(cleaned_text) > 50 else None # Простая проверка длины
+            return cleaned_text if len(cleaned_text) > 50 else None
         else:
             return None
     except Exception as e:
         logger.error(f"Error parsing HTML: {e}", exc_info=True)
         return None
+
 
 def scrape_and_extract_text(url: str) -> Tuple[Optional[str], Optional[str]]:
     """
@@ -78,9 +78,9 @@ def extract_products_with_ner(text: str) -> List[str]:
     nlp = extractor_config.nlp_model
 
     if nlp is None:
-         logger.error("NER model is not loaded. Cannot extract products.")
-         # В реальном приложении здесь нужно бросить исключение или вернуть ошибку
-         return [] # Возвращаем пустой список, если модель не загружена
+        logger.error("NER model is not loaded. Cannot extract products.")
+
+        return []
 
     if not text:
         return []
@@ -90,12 +90,12 @@ def extract_products_with_ner(text: str) -> List[str]:
         for ent in doc.ents:
             if ent.label_ == 'PRODUCT':
                 products.append(ent.text.strip())
-        # Убираем дубликаты, сохраняя порядок
+
         products = list(dict.fromkeys(products))
         logger.info(f"Found {len(products)} potential products.")
     except Exception as e:
         logger.error(f"Error during NER processing: {e}", exc_info=True)
-        # Можно вернуть ошибку или пустой список
+
         return []
 
     return products
